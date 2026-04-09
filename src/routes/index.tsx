@@ -58,10 +58,13 @@ function App() {
 
       {
         isPending ? <p>Searching...</p> : isError ? <>
-          <p>How to pronounce "{error.response?.data.detail.query}" in English not found</p>
-        </> : data ? <>
+          {
+            error.response?.status == 404 ? <p>How to pronounce "{error.response?.data.detail.query}" in English not found</p>
+              : <p>{error.response?.data.detail.message}</p>
+          }
+        </> : data ?
           <YoutubePlayer start={data.transcripts[0].start} videoId={data.transcripts[0].videoId} />
-        </> :
+          :
           <>      {/* Suggestions */}
             <div className="max-w-md text-xs sm:text-sm md:text-base text-amber-300 font-semibold mb-6 leading-relaxed">
               Try:{' '}
