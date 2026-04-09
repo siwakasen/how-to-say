@@ -1,27 +1,39 @@
 import { createFileRoute } from '@tanstack/react-router'
 import { useState, type KeyboardEvent } from 'react'
+import { useMutation } from '@tanstack/react-query'
+import axios, { AxiosError } from 'axios'
+import { YoutubePlayer } from '#/components/YoutubePlayer'
+import type { TranscriptsResponse, TranscriptsResponseError } from '#/interfaces/transcripts-interface'
 
 export const Route = createFileRoute('/')({
   component: App,
 })
 
 function App() {
+  const apiUrl = import.meta.env.VITE_API_URL
   const [text, setText] = useState('')
-  const [loading, setLoading] = useState(false)
-
   const suggestions = [
-    'please',
-    'less stressful',
-    'the exact day',
-    'no idea',
-    'ambidextrous',
-    'I believe',
+    'fascinating',
+    'scissors',
+    'language',
+    'mischievous',
+    'hierarchy',
+    'listen',
   ]
+
+  const { isPending, mutate, data, isError, error } = useMutation<TranscriptsResponse,
+    AxiosError<TranscriptsResponseError>,
+    string>({
+      mutationFn: async (query: string) => {
+        const res = await axios.get<TranscriptsResponse>(`${apiUrl}/api?q=${query}`)
+        console.log(res.data)
+        return res.data
+      }
+    })
 
   const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && text.length !== 0) {
-      console.log('Enter key pressed!')
-      setLoading(true)
+      mutate(text)
     }
   }
 
@@ -30,6 +42,7 @@ function App() {
 
       {/* Title + Input */}
       <h1 className="flex flex-wrap justify-center items-center gap-2 text-xl sm:text-3xl md:text-4xl font-bold mb-6 leading-snug">
+
         <span>How to say</span>
         <input
           value={text}
@@ -44,26 +57,37 @@ function App() {
       </h1>
 
       {
-        !loading ? <>      {/* Suggestions */}
-          <div className="max-w-md text-xs sm:text-sm md:text-base text-amber-300 font-semibold mb-6 leading-relaxed">
-            Try:{' '}
-            {suggestions.map((item, i) => (
-              <button
-                key={i}
-                onClick={() => setText(item)}
-                className="underline mr-2 hover:cursor-pointer"
-              >
-                {item},
-              </button>
-            ))}
-          </div>
+        isPending ? <p>Searching...</p> : isError ? <>
+          <p>How to pronounce "{error.response?.data.detail.query}" in English not found</p>
+        </> : data ? <>
+          <YoutubePlayer start={data.transcripts[0].start} videoId={data.transcripts[0].videoId} />
+        </> :
+          <>      {/* Suggestions */}
+            <div className="max-w-md text-xs sm:text-sm md:text-base text-amber-300 font-semibold mb-6 leading-relaxed">
+              Try:{' '}
+              {suggestions.map((item, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setText(item)
+                    mutate(item)
+                  }}
+                  className="underline mr-2 hover:cursor-pointer"
+                >
+                  {item},
+                </button>
+              ))}
+            </div>
 
-          {/* Description */}
-          <p className="max-w-md sm:max-w-lg text-sm sm:text-base text-[var(--sea-ink-soft)] leading-relaxed">
-            Improve your English pronunciation by listening to examples of real
-            people speaking English on YouTube.
-          </p>
-        </> : <><p>Searching...</p></>
+            {/* Description */}
+            <p className="max-w-md sm:max-w-lg text-sm md:text-lg xl:text-xl sm:text-base  leading-relaxed">
+              Improve your English pronunciation by listening to examples of real
+              people speaking English on YouTube.
+            </p>
+          </>
+      }
+
+      {
       }
     </main>
   )

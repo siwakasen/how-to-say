@@ -14,7 +14,7 @@ export default function Header() {
           </Link>
         </h2>
         <div>
-          <a href='https://github.com/stars/siwakasen/lists/how-to-say-in-english'>
+          <a href='https://github.com/stars/siwakasen/lists/how-to-say-in-english' target='_blank'>
             <img src='github.svg' width={40} height={40} className='cursor-pointer'></img>
           </a>
 
