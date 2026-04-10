@@ -57,7 +57,7 @@ function App() {
     setRefreshKey((prev) => prev + 1)
   }
   return (
-    <main className="page-wrap px-4 pb-10 pt-16 flex flex-col items-center text-center">
+    <main className="page-wrap px-4 pb-10 pt-4 flex flex-col items-center text-center">
 
       {/* Title + Input */}
       <h1 className="flex flex-wrap justify-center items-center gap-2 text-xl sm:text-3xl md:text-4xl font-bold mb-6 leading-snug">
@@ -74,55 +74,62 @@ function App() {
                      px-2 py-0.5 bg-transparent text-center sm:text-start"
         />
       </h1>
-
       {
-        isPending ? <p>Searching...</p> : isError ? <>
-          {
-            error.response?.status == 404 ? <p>How to pronounce "{error.response?.data.detail.query}" in English not found</p>
-              : <p>{error.response?.data.detail.message}</p>
-          }
-        </> : data ?
-          <div className='w-full sm:w-225 island-shell p-5 '>
-            <div className='text-start mb-2  text-xl flex justify-between'>
-              <p>How to pronouce  <span className='text-rose-400'>{data.query}</span> in English ( {indexVideo + 1} out of {video.length} ):</p>
-              <div className='flex items-center gap-4 shrink-0'>
-                <button onClick={handlePrevious} className='hover:text-blue-600 cursor-pointer'><SkipBack /></button>
-                <button onClick={handleRefresh} className='hover:text-blue-600 cursor-pointer '><RefreshCcw /></button>
-                <button onClick={handleForward} className='hover:text-blue-600 cursor-pointer'><SkipForward /></button>
-              </div>
-            </div>
-            <YoutubePlayer
-              key={`${video[indexVideo].videoId}-${video[indexVideo].start}-${refreshKey}`}
-              start={data.transcripts[indexVideo].start}
-              videoId={data.transcripts[indexVideo].videoId} />
+        isError && (
+          <div className='p-2 mb-4 border-b border-(--line)'>
+            {
+              error.response?.status === 404 ? (
+                <p className='text-amber-300'>How to pronounce "{error.response.data.detail.query}" in English not found</p>
+              )
+                : (<p>{error.response?.data.detail.message ?? 'Something went wrong'}</p>)
+            }
           </div>
-          :
-          <>      {/* Suggestions */}
-            <div className="max-w-md text-xs sm:text-sm md:text-base text-amber-300 font-semibold mb-6 leading-relaxed">
-              Try:{' '}
-              {suggestions.map((item, i) => (
-                <button
-                  key={i}
-                  onClick={() => {
-                    setText(item)
-                    mutate(item)
-                  }}
-                  className="underline mr-2 hover:cursor-pointer"
-                >
-                  {item},
-                </button>
-              ))}
-            </div>
-
-            {/* Description */}
-            <p className="max-w-md sm:max-w-lg text-sm md:text-lg xl:text-xl sm:text-base  leading-relaxed">
-              Improve your English pronunciation by listening to examples of real
-              people speaking English on YouTube.
-            </p>
-          </>
+        )
       }
-
       {
+        isPending ? <p>Searching...</p> :
+          data ?
+            <div className='w-full sm:w-225 island-shell p-5 '>
+              <div className='text-start mb-2  text-xl flex justify-between'>
+                <p>How to pronouce
+                  <span className='text-rose-400'>{data.query}</span>
+                  in English ( {indexVideo + 1} out of {video.length} ):
+                </p>
+                <div className='flex items-center gap-4 shrink-0'>
+                  <button onClick={handlePrevious} className='hover:text-blue-600 cursor-pointer'><SkipBack /></button>
+                  <button onClick={handleRefresh} className='hover:text-blue-600 cursor-pointer '><RefreshCcw /></button>
+                  <button onClick={handleForward} className='hover:text-blue-600 cursor-pointer'><SkipForward /></button>
+                </div>
+              </div>
+              <YoutubePlayer
+                key={`${video[indexVideo].videoId}-${video[indexVideo].start}-${refreshKey}`}
+                start={data.transcripts[indexVideo].start}
+                videoId={data.transcripts[indexVideo].videoId} />
+            </div>
+            :
+            <>      {/* Suggestions */}
+              <div className="max-w-md text-xs sm:text-sm md:text-base  font-semibold mb-6 leading-relaxed">
+                Try:{' '}
+                {suggestions.map((item, i) => (
+                  <button
+                    key={i}
+                    onClick={() => {
+                      setText(item)
+                      mutate(item)
+                    }}
+                    className="underline mr-2 hover:cursor-pointer text-blue-500"
+                  >
+                    {item},
+                  </button>
+                ))}
+              </div>
+
+              {/* Description */}
+              <p className="max-w-md sm:max-w-lg text-sm md:text-lg xl:text-xl sm:text-base  leading-relaxed">
+                Improve your English pronunciation by listening to examples of real
+                people speaking English on YouTube.
+              </p>
+            </>
       }
     </main>
   )
