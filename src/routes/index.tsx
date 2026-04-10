@@ -73,6 +73,7 @@ function App() {
                      outline-none border-b-2 border-(--line) 
                      px-2 py-0.5 bg-transparent text-center sm:text-start"
         />
+        <span className='font-degular font-normal text-lg sm:text-3xl text-gray-400'>?</span>
       </h1>
       {
         isError && (
@@ -89,10 +90,10 @@ function App() {
       {
         isPending ? <p>Searching...</p> :
           data ?
-            <div className='w-full sm:w-225 island-shell p-5 '>
+            <div className='w-full sm:w-225 island-shell p-5 rounded-lg'>
               <div className='text-start mb-2  text-xl flex justify-between'>
                 <p>How to pronouce
-                  <span className='text-rose-400'>{data.query}</span>
+                  <span className='text-rose-400'> {data.query} </span>
                   in English ( {indexVideo + 1} out of {video.length} ):
                 </p>
                 <div className='flex items-center gap-4 shrink-0'>
@@ -125,9 +126,8 @@ function App() {
               </div>
 
               {/* Description */}
-              <p className="max-w-md sm:max-w-lg text-sm md:text-lg xl:text-xl sm:text-base  leading-relaxed">
-                Improve your English pronunciation by listening to examples of real
-                people speaking English on YouTube.
+              <p className="max-w-md sm:max-w-xl text-sm md:text-lg xl:text-xl sm:text-base  leading-relaxed">
+                Improve your English pronunciation by listening to real native speakers on YouTube.
               </p>
             </>
       }
