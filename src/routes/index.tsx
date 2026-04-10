@@ -3,7 +3,8 @@ import { useState, type KeyboardEvent } from 'react'
 import { useMutation } from '@tanstack/react-query'
 import axios, { AxiosError } from 'axios'
 import { YoutubePlayer } from '#/components/YoutubePlayer'
-import type { TranscriptsResponse, TranscriptsResponseError } from '#/interfaces/transcripts-interface'
+import { RefreshCcw, SkipBack, SkipForward } from 'lucide-react'
+import type { Transcript, TranscriptsResponse, TranscriptsResponseError } from '#/interfaces/transcripts-interface'
 
 export const Route = createFileRoute('/')({
   component: App,
@@ -12,6 +13,9 @@ export const Route = createFileRoute('/')({
 function App() {
   const apiUrl = import.meta.env.VITE_API_URL
   const [text, setText] = useState('')
+  const [video, setVideo] = useState<Transcript[]>([])
+  const [indexVideo, setIndexVideo] = useState<number>(0)
+  const [refreshKey, setRefreshKey] = useState(0)
   const suggestions = [
     'fascinating',
     'scissors',
@@ -26,7 +30,8 @@ function App() {
     string>({
       mutationFn: async (query: string) => {
         const res = await axios.get<TranscriptsResponse>(`${apiUrl}/api?q=${query}`)
-        console.log(res.data)
+        setVideo(res.data.transcripts)
+        setIndexVideo(0)
         return res.data
       }
     })
@@ -37,6 +42,20 @@ function App() {
     }
   }
 
+  const handlePrevious = () => {
+    if (indexVideo == 0) return
+    setIndexVideo(indexVideo - 1)
+  }
+
+  const handleForward = () => {
+    if (indexVideo == video.length - 1) return
+    setIndexVideo(indexVideo + 1)
+  }
+
+
+  const handleRefresh = () => {
+    setRefreshKey((prev) => prev + 1)
+  }
   return (
     <main className="page-wrap px-4 pb-10 pt-16 flex flex-col items-center text-center">
 
@@ -63,7 +82,20 @@ function App() {
               : <p>{error.response?.data.detail.message}</p>
           }
         </> : data ?
-          <YoutubePlayer start={data.transcripts[0].start} videoId={data.transcripts[0].videoId} />
+          <div className='w-full sm:w-225 island-shell p-5 '>
+            <div className='text-start mb-2  text-xl flex justify-between'>
+              <p>How to pronouce  <span className='text-rose-400'>{data.query}</span> in English ( {indexVideo + 1} out of {video.length} ):</p>
+              <div className='flex items-center gap-4 shrink-0'>
+                <button onClick={handlePrevious} className='hover:text-blue-600 cursor-pointer'><SkipBack /></button>
+                <button onClick={handleRefresh} className='hover:text-blue-600 cursor-pointer '><RefreshCcw /></button>
+                <button onClick={handleForward} className='hover:text-blue-600 cursor-pointer'><SkipForward /></button>
+              </div>
+            </div>
+            <YoutubePlayer
+              key={`${video[indexVideo].videoId}-${video[indexVideo].start}-${refreshKey}`}
+              start={data.transcripts[indexVideo].start}
+              videoId={data.transcripts[indexVideo].videoId} />
+          </div>
           :
           <>      {/* Suggestions */}
             <div className="max-w-md text-xs sm:text-sm md:text-base text-amber-300 font-semibold mb-6 leading-relaxed">
