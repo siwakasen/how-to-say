@@ -10,7 +10,7 @@ export default function Header() {
             className="inline-flex items-center whitespace-nowrap gap-1 rounded-full border border-(--chip-line) bg-(--chip-bg) px-3 py-1.5 text-sm text-(--sea-ink) no-underline shadow-[0_8px_24px_rgba(30,90,72,0.08)] sm:px-4 sm:py-2"
           >
             <span className="text-base">
-              <img src='apple-icon-72x72.png' width={25} height={25} className='cursor-pointer pb-1 ps-1'></img>
+              <img src='un.png' width={25} height={25} className='cursor-pointer'></img>
             </span>
             How To Say in English
           </Link>
