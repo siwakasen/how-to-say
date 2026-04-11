@@ -34,7 +34,13 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         title: 'How To Say in English',
       },
     ],
+    //FIX: CSS loaded slowly in prod (or in client side)
     links: [
+      {
+        rel: 'preload',
+        href: appCss,
+        as: 'style',
+      },
       {
         rel: 'stylesheet',
         href: appCss,
