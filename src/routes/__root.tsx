@@ -9,7 +9,6 @@ import Footer from '../components/Footer'
 import Header from '../components/Header'
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools'
-
 import appCss from '../styles.css'
 
 import type { QueryClient } from '@tanstack/react-query'
@@ -32,18 +31,6 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
       },
       {
         title: 'How To Say in English',
-      },
-    ],
-    //FIX: CSS loaded slowly in prod (or in client side)
-    links: [
-      {
-        rel: 'preload',
-        href: appCss,
-        as: 'style',
-      },
-      {
-        rel: 'stylesheet',
-        href: appCss,
       },
     ],
   }),
