@@ -7,6 +7,7 @@ import { RefreshCcw, SkipBack, SkipForward } from 'lucide-react'
 import type { Transcript, TranscriptsResponse, TranscriptsResponseError } from '#/interfaces/transcripts-interface'
 
 export const Route = createFileRoute('/')({
+  ssr: true,
   component: App,
 })
 
