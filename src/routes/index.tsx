@@ -18,12 +18,12 @@ function App() {
   const [indexVideo, setIndexVideo] = useState<number>(0)
   const [refreshKey, setRefreshKey] = useState(0)
   const suggestions = [
-    'fascinating',
-    'scissors',
     'language',
-    'mischievous',
-    'hierarchy',
+    'cupcake',
     'listen',
+    'scope',
+    'around',
+    'scissors',
   ]
 
   const { isPending, mutate, data, isError, error } = useMutation<TranscriptsResponse,
