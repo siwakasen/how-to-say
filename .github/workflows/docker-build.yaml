@@ -50,12 +50,9 @@ jobs:
             --build-arg BUILD_VAR_VITE_API_URL=${{ vars.BUILD_VAR_VITE_API_URL }} \
             -f Dockerfile -t $IMAGE:latest -t $IMAGE:sha-${SHORT_SHA} .
           docker push $IMAGE:latest
-          docker push $IMAGE:sha-${SHORT_SHA} 
+          docker push $IMAGE:sha-${SHORT_SHA}
 
       - name: Logout from Registry
         if: env.skip == 'false'
         run: |
           docker logout
-
-
-

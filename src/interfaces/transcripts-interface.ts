@@ -1,15 +1,15 @@
 export interface TranscriptsResponse {
-  message: string
-  query: string
-  transcripts: Transcript[]
+  message: string;
+  query: string;
+  transcripts: Transcript[];
 }
 export interface TranscriptsResponseError {
-  detail: TranscriptsResponse
+  detail: TranscriptsResponse;
 }
 
 export interface Transcript {
-  text: string
-  videoId: string
-  duration?: number
-  start: number
+  text: string;
+  videoId: string;
+  duration?: number;
+  start: number;
 }
