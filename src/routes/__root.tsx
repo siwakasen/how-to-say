@@ -30,7 +30,7 @@ export const Route = createRootRouteWithContext<MyRouterContext>()({
         content: 'width=device-width, initial-scale=1',
       },
       {
-        title: 'How To Say in English',
+        title: 'How To Pronounce any words in English',
       },
     ],
   }),

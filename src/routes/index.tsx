@@ -70,7 +70,7 @@ function App() {
     <main className='page-wrap px-4 pb-10 pt-4 flex flex-col items-center text-center'>
       {/* Title + Input */}
       <h1 className='flex flex-wrap justify-center items-center gap-2 text-xl sm:text-3xl md:text-4xl font-bold mb-6 leading-snug'>
-        <span>How to say</span>
+        <span>How to pronounce</span>
         <input
           value={text}
           onChange={(e) => setText(e.target.value)}

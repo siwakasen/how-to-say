@@ -17,7 +17,7 @@ export default function Header() {
                 className='cursor-pointer'
               ></img>
             </span>
-            How To Say in English
+            How To Pronounce
           </Link>
         </h2>
         <div>
