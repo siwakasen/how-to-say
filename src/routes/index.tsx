@@ -19,7 +19,7 @@ function App() {
   const [refreshKey, setRefreshKey] = useState(0)
   const suggestions = [
     'language',
-    'privilege'
+    'privilege',
     'listen',
     'scope',
     'around',
