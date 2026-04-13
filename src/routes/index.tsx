@@ -105,9 +105,9 @@ function App() {
       {isPending ? (
         <p>Searching...</p>
       ) : data ? (
-        <div className='w-full sm:w-225 island-shell p-5 rounded-lg'>
+        <div className='w-full sm:w-225 island-shell p-1 md:p-5 rounded-lg'>
           <div className='text-start mb-2  text-xl flex justify-between'>
-            <p>
+            <p className='text-sm sm:text-lg'>
               How to pronouce
               <span className='text-rose-400'> {data.query} </span>
               in English ( {indexVideo + 1} out of {video.length} ):
