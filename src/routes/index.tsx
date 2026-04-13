@@ -1,5 +1,6 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
+import type { KeyboardEvent } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
@@ -18,6 +19,7 @@ export const Route = createFileRoute('/')({
 
 function App() {
   const apiUrl = import.meta.env.VITE_API_URL;
+  const [text, setText] = useState('');
   const [video, setVideo] = useState<Transcript[]>([]);
   const [indexVideo, setIndexVideo] = useState<number>(0);
   const [refreshKey, setRefreshKey] = useState(0);
@@ -45,6 +47,12 @@ function App() {
     },
   });
 
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter' && text.length !== 0) {
+      mutate(text);
+    }
+  };
+
   const handlePrevious = () => {
     if (indexVideo == 0) return;
     setIndexVideo(indexVideo - 1);
@@ -64,9 +72,12 @@ function App() {
       <h1 className='flex flex-wrap justify-center items-center gap-2 text-xl sm:text-3xl md:text-4xl font-bold mb-6 leading-snug'>
         <span>How to pronounce</span>
         <input
+          value={text}
           onChange={(e) => {
+            setText(e.target.value);
             mutate(e.target.value);
           }}
+          onKeyDown={handleKeyDown}
           placeholder='Any words...'
           className='min-w-35 max-w-55 sm:max-w-xs md:max-w-sm 
                      text-xl sm:text-3xl md:text-3xl 
@@ -138,6 +149,7 @@ function App() {
               <button
                 key={i}
                 onClick={() => {
+                  setText(item);
                   mutate(item);
                 }}
                 className='underline mr-2 hover:cursor-pointer text-blue-500'
