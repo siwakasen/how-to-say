@@ -1,6 +1,5 @@
 import { createFileRoute } from '@tanstack/react-router';
 import { useState } from 'react';
-import type { KeyboardEvent } from 'react';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import axios from 'axios';
@@ -47,12 +46,6 @@ function App() {
     },
   });
 
-  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Enter' && text.length !== 0) {
-      mutate(text);
-    }
-  };
-
   const handlePrevious = () => {
     if (indexVideo == 0) return;
     setIndexVideo(indexVideo - 1);
@@ -77,7 +70,6 @@ function App() {
             setText(e.target.value);
             mutate(e.target.value);
           }}
-          onKeyDown={handleKeyDown}
           placeholder='Any words...'
           className='min-w-35 max-w-55 sm:max-w-xs md:max-w-sm 
                      text-xl sm:text-3xl md:text-3xl 
