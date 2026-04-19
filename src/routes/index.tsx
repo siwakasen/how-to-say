@@ -28,7 +28,7 @@ function App() {
     'listen',
     'scope',
     'around',
-    'scissors',
+    'failure',
   ];
 
   const { isPending, mutate, data, isError, error } = useMutation<
