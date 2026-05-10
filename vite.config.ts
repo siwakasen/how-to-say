@@ -15,7 +15,7 @@ const config = defineConfig({
     tailwindcss(),
     tanstackStart(),
     viteReact(),
-    nitro(),
+    nitro({ rollupConfig: { external: [/^@sentry\//] }, preset: 'bun' }),
   ],
 });
 
