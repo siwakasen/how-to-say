@@ -9,7 +9,7 @@ import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 import TanStackQueryDevtools from '../integrations/tanstack-query/devtools';
-import appCss from '../styles.css';
+import '../styles.css';
 
 import type { QueryClient } from '@tanstack/react-query';
 
