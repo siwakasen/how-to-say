@@ -23,7 +23,7 @@ export default function Header() {
         </h2>
         <div>
           <a
-            href='https://github.com/stars/siwakasen/lists/how-to-say-in-english'
+            href='https://github.com/stars/siwakasen/lists/how-to-pronounce-in-english'
             target='_blank'
           >
             <img
