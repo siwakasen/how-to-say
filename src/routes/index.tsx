@@ -97,7 +97,7 @@ function App() {
       {isPending ? (
         <p>Searching...</p>
       ) : data ? (
-        <div className='w-full sm:w-225 island-shell p-1 md:p-5 rounded-lg'>
+        <div className='w-full sm:w-225 md:w-full island-shell p-1 md:p-5 rounded-lg'>
           <div className='text-start mb-2  text-xl flex justify-between'>
             <p className='text-sm sm:text-lg'>
               How to pronouce
