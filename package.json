@@ -12,6 +12,7 @@
     "preview:output": "bun --cwd .output ./server/index.mjs",
     "build:cf": "CLOUDFLARE=true vite build",
     "deploy": "bun run build:cf && wrangler deploy",
+    "deploy:local": "env -u VITE_API_URL CLOUDFLARE=true vite build && wrangler deploy",
     "cf-typegen": "wrangler types",
     "test": "vitest run",
     "lint": "eslint",
