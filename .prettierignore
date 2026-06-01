@@ -1,3 +1,9 @@
 package-lock.json
 pnpm-lock.yaml
 yarn.lock
+.output
+dist
+src/routeTree.gen.ts
+public/_headers
+public/robots.txt
+public/sitemap.xml
